@@ -46,6 +46,45 @@ def setId():
             break
     return idd
 
+def login():
+    clearConsole()
+    print("🔒 Login")
+    global actualUser
+    data = getJson()
+    if data == []:
+        print("❔ No accounts available.")
+        input("Continue...")
+        return
+    user = input("Enter your user name: ")
+    if user == "":
+        print("❌ User cannot be empty.")
+        input("Continue...")
+        return
+    if any(u["user"] == user for u in data):
+        print("This user exists.")
+    else:
+        print("❌ This user not exists")
+        input("Continue...")
+        return
+    
+    for u in data:
+        if u["user"] == user:
+            id = u["id"]
+
+    password = input("Enter your password: ")
+    if password == "":
+        print("❌ Password cannot be empty.")
+        input("Continue...")
+        return
+    if data[id]["password"] != password:
+        print("❌ The password does not match.")
+        input("Continue...")
+        return
+
+    actualUser = id
+    print("✅ User loged successfuly")
+    input("Continue...")
+
 def register():
     clearConsole()
     data = getJson()
