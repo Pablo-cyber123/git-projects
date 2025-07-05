@@ -95,11 +95,46 @@ def register():
             setJson(data)
             print("User saved successfuly.")
 
+def login():
+    global actualUser
+    
+    
+    data = getJson()
+    if data == []:
+        print("No accounts available.")
+        return
+    user = input("Enter your user name: ")
+    if user == "":
+        print("User cannot be empty.")
+        return
+    if any(u["user"] == user for u in data):
+        print("This user exists.")
+    else:
+        print("This user not exists")
+        return
+    
+    for u in data:
+        if u["user"] == user:
+            id = u["id"]
+
+    password = input("Enter your password: ")
+    if password == "":
+        print("Password cannot be empty.")
+        return
+    if data[id]["password"] != password:
+        print("The password does not match.")
+        return
+
+    actualUser = id
+    print(f"""
+    Account: {data[id]["user"]} Id({data[id]["id"]})
+""")
+
 while True:
     print(loginMenu)
     op = input("Select an option: ")
     if op == "1":
-        pass
+        login()
     elif op == "2":
         register()
     elif op == "3":
