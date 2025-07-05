@@ -46,10 +46,12 @@ def setId():
 
 def login():
     global actualUser
-    if data == []:
-        print("No accounts available.")
+    
     
     data = getJson()
+    if data == []:
+        print("No accounts available.")
+        return
     user = input("Enter your user name: ")
     if user == "":
         print("User cannot be empty.")
