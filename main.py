@@ -15,8 +15,12 @@ loginMenu = """
 
 def setJson(data):
     global ruta
-    with open(ruta, "w") as file:
-        json.dump(data, file, indent=2)
+    try:
+        with open(ruta, "w") as file:
+            json.dump(data, file, indent=2)
+    except Exception as e:
+        print(e)
+        return
 
 def getJson():
     global ruta
@@ -26,6 +30,7 @@ def getJson():
     except Exception as e:
         print(e)
         data = []
+        setJson([])
     return data
 
 def setId():
@@ -41,13 +46,18 @@ def setId():
 
 def login():
     global actualUser
+    if data == []:
+        print("No accounts available.")
+    
     data = getJson()
     user = input("Enter your user name: ")
     if user == "":
         print("User cannot be empty.")
         return
-    elif any(u["user"] != user for u in data):
-        print("This user not exists.")
+    if any(u["user"] == user for u in data):
+        print("This user exists.")
+    else:
+        print("This user not exists")
         return
     
     for u in data:
